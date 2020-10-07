@@ -103,6 +103,37 @@ void TriTas(int tab[],int longueurTab)
         printf("\n");
     }//fin du rangement
     
+    // attention tout ce qui est en dessous ne marche pas
+        
+    for (i = longueurTab-1; i> 0;i--)
+    {
+        fils = 2*i +1 ;
+        
+        for (j = 0; j< i/2 ; j++)
+        {
+            if (tab[fils] >tab[i])
+            {
+                stock = tab[j];
+                tab[j] = tab[fils];
+                tab[fils]= stock;
+            }
+            if (tab[fils+1] >tab[i])
+            {
+                stock = tab[j];
+                tab[j] = tab[fils+1];
+                tab[fils+1]= stock;
+            }
+        }  
+        
+        stock = tab[i];
+        tab[i] = tab[0];
+        tab[i]= stock;
+        for (int p =0; p<longueurTab;p++)
+        {
+            printf("%d , ",tab[p]);
+        }
+        printf("\n");
+    }
    
     
 }
@@ -193,6 +224,14 @@ int main(int argc, char** argv) {
         tab[i]=  rand()%100;
     }
     insertion(tab, longueurTab);*/
+    
+    /*int tab[100],i, longueurTab=7;
+    for(i = 0; i < longueurTab; i++)
+    {
+        tab[i]=  rand()%100;
+    }
+    
+    TriTas(tab, longueurTab);*/
 
     return (EXIT_SUCCESS);
 }
