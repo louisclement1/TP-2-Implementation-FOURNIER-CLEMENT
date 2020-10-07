@@ -64,13 +64,14 @@ void insertion(int tab[],int longueurTab)
     for(i=1; i<longueurTab;i++)
     {
         j = i;
-        while (j > 0 && tab[j-1] > tab[j])
+        stock = tab[j];
+        while (j > 0 && tab[j-1] > stock)
         {
-            stock = tab[j];
+            
             tab[j]=tab[j-1];
-            tab[j-1]=stock;
             j--;
         }
+        tab[j-1]=stock;
     }
     for (i=0; i<longueurTab;i++)
     {
