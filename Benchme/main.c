@@ -18,6 +18,51 @@
  * 
  */
 
+void TriSelection(int tab[],int longueurTab)
+{
+    //variable tri
+    int i, j, temp;
+    int rangMin;
+    
+    //variable mesure du temps
+    float temps;
+    clock_t t1, t2;
+    
+    t1 = clock();
+    
+    //algorithme tri par selection
+    for(i=0; i<longueurTab;i++)
+    {
+        //on commence le tri au rang i
+        rangMin = i;
+        
+        //on parcours le tableau
+        for (j =i; j<longueurTab;j++)
+        {
+            //le rang de la plus petite valeur est stocké
+            if (tab[rangMin]>tab[j])
+            { 
+                rangMin = j;
+            }
+        }
+        
+        //invertion des valeurs, la plus petite prend la position i
+        temp = tab[rangMin];
+        tab[rangMin] = tab[i];
+        tab[i] = temp;
+    }
+    
+    //affichage des resultats, a retirer plus tard
+    for (i=0; i<longueurTab;i++)
+    {
+        printf("%d\n",tab[i]);
+    }
+    
+    t2 = clock();
+    temps = (float)(t2-t1)/CLOCKS_PER_SEC;
+    printf("temps = %f\n", temps);
+}
+
 void bulle(int tab[], int longueurTab)
 {
     int i ,j;
@@ -84,6 +129,13 @@ void insertion(int tab[],int longueurTab)
 }
 
 int main(int argc, char** argv) {
+    /*int tab[100],i, longueurTab=5;
+    for(i = 0; i < longueurTab; i++)
+    {
+        tab[i]=  rand()%100;
+    }
+    TriSelection(tab, longueurTab);*/
+    
     /*int tab[100],i, longueurTab=5;
     for(i = 0; i < longueurTab; i++)
     {
