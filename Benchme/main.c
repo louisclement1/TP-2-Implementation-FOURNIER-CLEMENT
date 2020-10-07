@@ -63,6 +63,50 @@ void TriSelection(int tab[],int longueurTab)
     printf("temps = %f\n", temps);
 }
 
+void TriTas(int tab[],int longueurTab)
+{ 
+    int i,j,fils,stock;
+    
+    //on range le tableau pour faire un tas
+    for (i = 0; i<longueurTab/2;i++)
+    {
+        fils = 2*i +1 ;
+        
+        if (tab[fils] >tab[i])
+        {
+            j = fils;
+            while (j>0 && tab[j]>tab[(j-1)/2])
+            {
+                stock = tab[j];
+                tab[j] = tab[(j-1)/2];
+                tab[(j-1)/2]= stock;
+                
+                j = (j-1)/2;
+            }
+        }
+        if (tab[fils+1] >tab[i] && fils+1<longueurTab)
+        {
+            j = fils+1;
+            while (j>0 && tab[j]>tab[(j-1)/2])
+            {
+                stock = tab[j];
+                tab[j] = tab[(j-1)/2];
+                tab[(j-1)/2]= stock;
+                j = (j-1)/2;
+            }
+        }
+        
+        for (int p =0; p<longueurTab;p++)
+        {
+            printf("%d , ",tab[p]);
+        }
+        printf("\n");
+    }//fin du rangement
+    
+   
+    
+}
+
 void bulle(int tab[], int longueurTab)
 {
     int i ,j;
