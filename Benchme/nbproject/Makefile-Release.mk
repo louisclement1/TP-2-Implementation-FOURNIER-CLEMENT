@@ -35,7 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/bulle.o \
+	${OBJECTDIR}/insertion.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/selection.o \
+	${OBJECTDIR}/tas.o
 
 
 # C Compiler Flags
@@ -62,10 +66,30 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/benchme: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/benchme ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/bulle.o: bulle.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/bulle.o bulle.c
+
+${OBJECTDIR}/insertion.o: insertion.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/insertion.o insertion.c
+
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/selection.o: selection.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/selection.o selection.c
+
+${OBJECTDIR}/tas.o: tas.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tas.o tas.c
 
 # Subprojects
 .build-subprojects:
