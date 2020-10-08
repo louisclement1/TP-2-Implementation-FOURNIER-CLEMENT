@@ -20,12 +20,13 @@
  */
 
 //tri par selection
-void TriSelection(float tab[], int longueurTab) {
+
+void TriSelection(float tab[], int longueurTab, FILE *fp) {
 
     //variable tri
     int i, j, rangMin;
     float stock;
-    
+
     //variable mesure du temps
     float temps;
     clock_t t1, t2;
@@ -50,24 +51,23 @@ void TriSelection(float tab[], int longueurTab) {
         tab[rangMin] = tab[i];
         tab[i] = stock;
     }
-    
+
     //affichage des resultats
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%f , ",tab[i]);
+    /*for (i = 0; i < longueurTab; i++) {
+        printf("%f , ", tab[i]);
     }
-    printf("\n");
+    printf("\n");*/
 
 
-    //calcul du temps d'execution
+    //calcul du temps d'execution et ecriture dans le csv
     t2 = clock();
     temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
-    printf("temps = %f\n", temps);
+    fprintf (fp,"%f,", temps);
 }
 
 //tri par tas
 
-void TriTas(float tab[], int longueurTab) {
+void TriTas(float tab[], int longueurTab, FILE *fp) {
 
     //declaration variable tri
     int i, j, fils, fils2;
@@ -103,7 +103,7 @@ void TriTas(float tab[], int longueurTab) {
 
         //meme comparaison mais on verifie en plus que la valeur fils de cette position existe
         if (tab[fils2] > tab[i] && fils2 < longueurTab) {
-            j = fils2 ;
+            j = fils2;
             //tant que la valeur fils est plus grande que la valeur pere et valeur pere > 0 on echange
             while (j > 0 && tab[j] > tab[(j - 1) / 2]) {
                 stock = tab[j];
@@ -144,23 +144,21 @@ void TriTas(float tab[], int longueurTab) {
         tab[0] = stock;
 
     }
-    
+
     //affichage des resultats
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%f , ",tab[i]);
+    /*for (i = 0; i < longueurTab; i++) {
+        printf("%f , ", tab[i]);
     }
-    printf("\n");
-    
-    //calcul du temps d'execution
+    printf("\n");*/
+
+    //calcul du temps d'execution et ecriture dans le csv
     t2 = clock();
     temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
-    printf("temps = %f\n", temps);
+    fprintf (fp,"%f,", temps);
 
 }
 
-
-void bulle(float tab[], int longueurTab) {
+void bulle(float tab[], int longueurTab, FILE *fp) {
     //variable de tri
     int i, j;
     float stock = 0;
@@ -185,22 +183,22 @@ void bulle(float tab[], int longueurTab) {
 
     }
 
-    
-    //affichage des resultats
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%f , ",tab[i]);
-    }
-    printf("\n");
 
-    //calcul du temps d'execution du programme
+    //affichage des resultats
+    /*for (i = 0; i < longueurTab; i++) {
+        printf("%f , ", tab[i]);
+    }
+    printf("\n");*/
+
+    //calcul du temps d'execution du programme et ecriture dans le csv
     t2 = clock();
     temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
-    printf("temps = %f\n", temps);
+    fprintf (fp,"%f,", temps);
+    
 
 }
 
-void insertion(float tab[], int longueurTab) {
+void insertion(float tab[], int longueurTab, FILE *fp) {
     //variable de tri
     int i, j;
     float stock;
@@ -224,47 +222,64 @@ void insertion(float tab[], int longueurTab) {
     }
 
     //affichage des resultats
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%f , ",tab[i]);
+    /*for (i = 0; i < longueurTab; i++) {
+        printf("%f , ", tab[i]);
     }
-    printf("\n");
+    printf("\n");*/
 
-    //calcul du temps d'execution du programme
+    //calcul du temps d'execution du programme et ecriture dans le csv
     t2 = clock();
     temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
-    printf("temps = %f\n", temps);
+    fprintf (fp,"%f\n", temps);
 }
 
 int main(int argc, char** argv) {
     
-    int i, longueurTab = 0;
     
-    printf("Saisir le nombre de valeur du tableau : ");
-    scanf("%d",&longueurTab);
-            
-    float tab[longueurTab];
+    int i, j, longueurTab = 0, nbtest;
+    char csvfile[1000];
     
-    for (i = 0; i < longueurTab; i++) {
-        tab[i] = rand() % 100;
+    //variable fichier
+    FILE *fp ;
+    
+    //saisie de l'emplacement du fichier csv
+    printf("Saisir le nom du fichier CSV dans lequel ecrire les resultats: ");
+    scanf("%s", &csvfile);
+    
+    //ouverture et initialisation du fichier csv
+    fp = fopen(csvfile, "w+");
+    fprintf(fp, "Temps tri par selection, Temps tri par tas, Temps tri a bulle, Temps tri par insertion\n");
+    
+    // nombre de test a effectuer
+    printf("Saisir le nombre de test a faire : ");
+    scanf("%d", &nbtest);
+    
+    //on effectue les test et on ecrit dans le fichier csv au fur et a mesure
+    for (j = 0; j < nbtest; j++) {
+        
+        //saisie longeur du tableau
+        printf("Saisir le nombre de valeur du tableau : ");
+        scanf("%d", &longueurTab);
+
+        float tab[longueurTab];
+
+        for (i = 0; i < longueurTab; i++) {
+            tab[i] = rand() % 1000000;
+        }
+
+        //execution des algorithmes de tri
+        TriSelection(tab, longueurTab, fp);
+
+        TriTas(tab, longueurTab, fp);
+
+        bulle(tab, longueurTab, fp);
+
+        insertion(tab, longueurTab, fp);
+
     }
     
-    //affichage des resultats
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%f , ",tab[i]);
-    }
-    printf("\n");
-
-    //char csvfile[];
-    
-    TriSelection(tab, longueurTab);
-    
-    TriTas(tab, longueurTab);
-    
-    bulle(tab, longueurTab);
-
-    insertion(tab, longueurTab);
+    //fermeture du fichier
+    fclose(fp);
 
     return (EXIT_SUCCESS);
 }
