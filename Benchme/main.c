@@ -13,130 +13,167 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /*
  * 
  */
 
-void TriSelection(int tab[],int longueurTab)
-{
+//tri par selection
+void TriSelection(int tab[], int longueurTab) {
+
     //variable tri
     int i, j, temp;
     int rangMin;
-    
+
     //variable mesure du temps
     float temps;
     clock_t t1, t2;
-    
+
     t1 = clock();
-    
+
     //algorithme tri par selection
-    for(i=0; i<longueurTab;i++)
-    {
+    for (i = 0; i < longueurTab - 1; i++) {
         //on commence le tri au rang i
         rangMin = i;
-        
+
         //on parcours le tableau
-        for (j =i; j<longueurTab;j++)
-        {
+        for (j = i; j < longueurTab; j++) {
             //le rang de la plus petite valeur est stocké
-            if (tab[rangMin]>tab[j])
-            { 
+            if (tab[rangMin] > tab[j]) {
                 rangMin = j;
             }
         }
-        
+
         //invertion des valeurs, la plus petite prend la position i
         temp = tab[rangMin];
         tab[rangMin] = tab[i];
         tab[i] = temp;
     }
-    
-    //affichage des resultats, a retirer plus tard
-    for (i=0; i<longueurTab;i++)
-    {
-        printf("%d\n",tab[i]);
-    }
-    
+
+
+    //calcul du temps d'execution
     t2 = clock();
-    temps = (float)(t2-t1)/CLOCKS_PER_SEC;
+    temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
     printf("temps = %f\n", temps);
 }
 
-void TriTas(int tab[],int longueurTab)
-{ 
-    int i,j,fils,stock;
-    
+//tri par tas
+
+void TriTas(int tab[], int longueurTab) {
+
+    //declaration variable tri
+    int i, j, fils, fils2, stock;
+
+    //variable mesure du temps
+    float temps;
+    clock_t t1, t2;
+
+    t1 = clock();
+
     //on range le tableau pour faire un tas
-    for (i = 0; i<longueurTab/2;i++)
-    {
-        fils = 2*i +1 ;
-        
-        if (tab[fils] >tab[i])
-        {
+    for (i = 0; i < longueurTab / 2; i++) {
+
+        //on calcule la position de la valeur fils
+        fils = 2 * i + 1;
+        fils2 = 2 * i + 2;
+
+        //on compare la valeur fils et la valeur pere
+        if (tab[fils] > tab[i]) {
+
             j = fils;
-            while (j>0 && tab[j]>tab[(j-1)/2])
-            {
+
+            //tant que la valeur fils est plus grande que la valeur pere et valeur pere > 0 on echange
+            while (j > 0 && tab[j] > tab[(j - 1) / 2]) {
                 stock = tab[j];
-                tab[j] = tab[(j-1)/2];
-                tab[(j-1)/2]= stock;
-                
-                j = (j-1)/2;
+                tab[j] = tab[(j - 1) / 2];
+                tab[(j - 1) / 2] = stock;
+
+                j = (j - 1) / 2;
             }
         }
-        if (tab[fils+1] >tab[i] && fils+1<longueurTab)
-        {
-            j = fils+1;
-            while (j>0 && tab[j]>tab[(j-1)/2])
-            {
+
+        //meme comparaison mais on verifie en plus que la valeur fils de cette position existe
+        if (tab[fils2] > tab[i] && fils2 < longueurTab) {
+            j = fils2 + 1;
+            //tant que la valeur fils est plus grande que la valeur pere et valeur pere > 0 on echange
+            while (j > 0 && tab[j] > tab[(j - 1) / 2]) {
                 stock = tab[j];
-                tab[j] = tab[(j-1)/2];
-                tab[(j-1)/2]= stock;
-                j = (j-1)/2;
+                tab[j] = tab[(j - 1) / 2];
+                tab[(j - 1) / 2] = stock;
+                j = (j - 1) / 2;
             }
         }
-        
-        for (int p =0; p<longueurTab;p++)
-        {
-            printf("%d , ",tab[p]);
-        }
-        printf("\n");
+
     }//fin du rangement
-    
-    // attention tout ce qui est en dessous ne marche pas
-        
-    for (i = longueurTab-1; i> 0;i--)
-    {
-        fils = 2*i +1 ;
-        
-        for (j = 0; j< i/2 ; j++)
-        {
-            if (tab[fils] >tab[i])
-            {
+
+
+    //tri par tas
+    //parcours le tableau a l'envers 
+    for (i = longueurTab - 1; i > 0; i--) {
+        fils = 2 * i + 1;
+
+        for (j = 0; j < i / 2; j++) {
+
+            int fils2 = 2 * j + 1;
+
+            //on fait remonter la valeur la plus grande en haut de l'arbre
+            if (tab[fils2] > tab[j]) {
                 stock = tab[j];
-                tab[j] = tab[fils];
-                tab[fils]= stock;
+                tab[j] = tab[fils2];
+                tab[fils2] = stock;
             }
-            if (tab[fils+1] >tab[i])
-            {
+            if (tab[fils2 + 1] > tab[j]) {
                 stock = tab[j];
-                tab[j] = tab[fils+1];
-                tab[fils+1]= stock;
+                tab[j] = tab[fils2 + 1];
+                tab[fils2 + 1] = stock;
             }
-        }  
-        
+        }
+
+        //on echange la valeur en haut de l'arbre et celle a la position i
         stock = tab[i];
         tab[i] = tab[0];
-        tab[i]= stock;
-        for (int p =0; p<longueurTab;p++)
-        {
-            printf("%d , ",tab[p]);
-        }
-        printf("\n");
+        tab[0] = stock;
+
     }
-   
     
+    //calcul du temps d'execution
+    t2 = clock();
+    temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
+    printf("temps = %f\n", temps);
+
 }
+
+void bulle(int tab[], int longueurTab) {
+
+    int i, j;
+    int stock = 0;
+    float temps;
+    clock_t t1, t2;
+
+    t1 = clock();
+
+    for (i = 0; i < longueurTab - 1; i++) {
+        for (j = 0; j < longueurTab - i - 1; j++) {
+            if (tab[j] > tab[j + 1]) {
+                stock = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = stock;
+
+            }
+        }
+
+    }
+    for (i = 0; i < longueurTab; i++) {
+        printf("%d\n", tab[i]);
+    }
+
+    t2 = clock();
+    temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
+    printf("temps = %f\n", temps);
+
+}
+
 
 void bulle(int tab[], int longueurTab)
 {
