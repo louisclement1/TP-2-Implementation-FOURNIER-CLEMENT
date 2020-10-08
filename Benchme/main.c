@@ -20,12 +20,12 @@
  */
 
 //tri par selection
-void TriSelection(int tab[], int longueurTab) {
+void TriSelection(float tab[], int longueurTab) {
 
     //variable tri
-    int i, j, temp;
-    int rangMin;
-
+    int i, j, rangMin;
+    float stock;
+    
     //variable mesure du temps
     float temps;
     clock_t t1, t2;
@@ -46,10 +46,17 @@ void TriSelection(int tab[], int longueurTab) {
         }
 
         //invertion des valeurs, la plus petite prend la position i
-        temp = tab[rangMin];
+        stock = tab[rangMin];
         tab[rangMin] = tab[i];
-        tab[i] = temp;
+        tab[i] = stock;
     }
+    
+    //affichage des resultats
+    for (i=0; i<longueurTab;i++)
+    {
+        printf("%f , ",tab[i]);
+    }
+    printf("\n");
 
 
     //calcul du temps d'execution
@@ -60,10 +67,11 @@ void TriSelection(int tab[], int longueurTab) {
 
 //tri par tas
 
-void TriTas(int tab[], int longueurTab) {
+void TriTas(float tab[], int longueurTab) {
 
     //declaration variable tri
-    int i, j, fils, fils2, stock;
+    int i, j, fils, fils2;
+    float stock;
 
     //variable mesure du temps
     float temps;
@@ -95,7 +103,7 @@ void TriTas(int tab[], int longueurTab) {
 
         //meme comparaison mais on verifie en plus que la valeur fils de cette position existe
         if (tab[fils2] > tab[i] && fils2 < longueurTab) {
-            j = fils2 + 1;
+            j = fils2 ;
             //tant que la valeur fils est plus grande que la valeur pere et valeur pere > 0 on echange
             while (j > 0 && tab[j] > tab[(j - 1) / 2]) {
                 stock = tab[j];
@@ -137,6 +145,13 @@ void TriTas(int tab[], int longueurTab) {
 
     }
     
+    //affichage des resultats
+    for (i=0; i<longueurTab;i++)
+    {
+        printf("%f , ",tab[i]);
+    }
+    printf("\n");
+    
     //calcul du temps d'execution
     t2 = clock();
     temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
@@ -145,11 +160,10 @@ void TriTas(int tab[], int longueurTab) {
 }
 
 
-
-void bulle(int tab[], int longueurTab) {
+void bulle(float tab[], int longueurTab) {
     //variable de tri
     int i, j;
-    int stock = 0;
+    float stock = 0;
     float temps;
     clock_t t1, t2;
 
@@ -171,11 +185,13 @@ void bulle(int tab[], int longueurTab) {
 
     }
 
-    /*affichage des resultats
+    
+    //affichage des resultats
     for (i=0; i<longueurTab;i++)
     {
-        printf("%d\n",tab[i]);
-    }*/
+        printf("%f , ",tab[i]);
+    }
+    printf("\n");
 
     //calcul du temps d'execution du programme
     t2 = clock();
@@ -184,10 +200,10 @@ void bulle(int tab[], int longueurTab) {
 
 }
 
-void insertion(int tab[], int longueurTab) {
+void insertion(float tab[], int longueurTab) {
     //variable de tri
     int i, j;
-    int stock;
+    float stock;
     float temps;
     clock_t t1, t2;
 
@@ -204,14 +220,15 @@ void insertion(int tab[], int longueurTab) {
             tab[j] = tab[j - 1]; // décale les élements plus grand que stock 
             j--;
         }
-        tab[j - 1] = stock; //place la valeur stock dans le trou laissé
+        tab[j] = stock; //place la valeur stock dans le trou laissé
     }
 
-     /*affichage des resultats
+    //affichage des resultats
     for (i=0; i<longueurTab;i++)
     {
-        printf("%d\n",tab[i]);
-    }*/
+        printf("%f , ",tab[i]);
+    }
+    printf("\n");
 
     //calcul du temps d'execution du programme
     t2 = clock();
@@ -220,20 +237,34 @@ void insertion(int tab[], int longueurTab) {
 }
 
 int main(int argc, char** argv) {
-        int tab[100], i, longueurTab = 5;
-
+    
+    int i, longueurTab = 0;
+    
+    printf("Saisir le nombre de valeur du tableau : ");
+    scanf("%d",&longueurTab);
+            
+    float tab[longueurTab];
+    
     for (i = 0; i < longueurTab; i++) {
         tab[i] = rand() % 100;
     }
+    
+    //affichage des resultats
+    for (i=0; i<longueurTab;i++)
+    {
+        printf("%f , ",tab[i]);
+    }
+    printf("\n");
 
-
+    //char csvfile[];
+    
     TriSelection(tab, longueurTab);
-
+    
+    TriTas(tab, longueurTab);
+    
     bulle(tab, longueurTab);
 
     insertion(tab, longueurTab);
-
-    TriTas(tab, longueurTab);
 
     return (EXIT_SUCCESS);
 }
