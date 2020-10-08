@@ -241,34 +241,20 @@ void insertion(int tab[],int longueurTab)
 }
 
 int main(int argc, char** argv) {
-    /*int tab[100],i, longueurTab=5;
-    for(i = 0; i < longueurTab; i++)
-    {
-        tab[i]=  rand()%100;
+        int tab[100], i, longueurTab = 5;
+
+    for (i = 0; i < longueurTab; i++) {
+        tab[i] = rand() % 100;
     }
-    TriSelection(tab, longueurTab);*/
-    
-    /*int tab[100],i, longueurTab=5;
-    for(i = 0; i < longueurTab; i++)
-    {
-        tab[i]=  rand()%100;
-    }
-    bulle(tab, longueurTab);*/
-    
-    /*int tab[100],i, longueurTab=5;
-    for(i = 0; i < longueurTab; i++)
-    {
-        tab[i]=  rand()%100;
-    }
-    insertion(tab, longueurTab);*/
-    
-    /*int tab[100],i, longueurTab=7;
-    for(i = 0; i < longueurTab; i++)
-    {
-        tab[i]=  rand()%100;
-    }
-    
-    TriTas(tab, longueurTab);*/
+
+
+    TriSelection(tab, longueurTab);
+
+    bulle(tab, longueurTab);
+
+    insertion(tab, longueurTab);
+
+    TriTas(tab, longueurTab);
 
     return (EXIT_SUCCESS);
 }
