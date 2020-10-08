@@ -144,35 +144,6 @@ void TriTas(int tab[], int longueurTab) {
 
 }
 
-void bulle(int tab[], int longueurTab) {
-
-    int i, j;
-    int stock = 0;
-    float temps;
-    clock_t t1, t2;
-
-    t1 = clock();
-
-    for (i = 0; i < longueurTab - 1; i++) {
-        for (j = 0; j < longueurTab - i - 1; j++) {
-            if (tab[j] > tab[j + 1]) {
-                stock = tab[j];
-                tab[j] = tab[j + 1];
-                tab[j + 1] = stock;
-
-            }
-        }
-
-    }
-    for (i = 0; i < longueurTab; i++) {
-        printf("%d\n", tab[i]);
-    }
-
-    t2 = clock();
-    temps = (float) (t2 - t1) / CLOCKS_PER_SEC;
-    printf("temps = %f\n", temps);
-
-}
 
 
 void bulle(int tab[], int longueurTab) {
